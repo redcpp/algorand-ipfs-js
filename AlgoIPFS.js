@@ -7,13 +7,14 @@ const sleep = (ms) => {
 }
 
 module.exports = class AlgoIPFS {
-  constructor (algodConfig) {
+  constructor (algodConfig, encryptionPassword=undefined) {
     this.algodConfig = algodConfig
+    this.encryptionPassword = encryptionPassword
   }
 
   async init () {
     this.algow = new AlgoWrapper(this.algodConfig)
-    this.ipfsw = new IPFSWrapper()
+    this.ipfsw = new IPFSWrapper(this.encryptionPassword)
     await this.ipfsw.init()
   }
 

@@ -26,16 +26,16 @@ const sleep = (ms) => {
 }
 
 const main = async () => {
-  const filepath = '6.pdf'
-  const algo_ipfs = new AlgoIPFS(algodConfig)
-  await algo_ipfs.init()
+  const filepath = '8.pdf'
+  const algo_ipfs = new AlgoIPFS(algodConfig, 'myveryhardtocrackpassword')
 
-  algo_ipfs.pushFile(filepath)
+  await algo_ipfs.init()
+  await algo_ipfs.pushFile(filepath)
 
   console.log('Waiting 5 secs for propagation to Indexer')
   await sleep(5000)
 
-  algo_ipfs.pullFile(filepath)
+  await algo_ipfs.pullFile(filepath)
 }
 
 main()
