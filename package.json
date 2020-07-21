@@ -1,0 +1,16 @@
+{
+  "name": "algo-ipfs",
+  "version": "1.0.0",
+  "description": "Connection of Algorand with IPFS",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Said Anaya Mancilla",
+  "license": "ISC",
+  "dependencies": {
+    "algosdk": "^1.6.2",
+    "ipfs": "^0.47.0",
+    "it-last": "^1.0.2"
+  }
+}
