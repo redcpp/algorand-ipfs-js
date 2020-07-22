@@ -7,18 +7,18 @@ const sleep = (ms) => {
 }
 
 module.exports = class AlgoIPFS {
-  constructor (algodConfig, encryptionPassword=undefined) {
+  constructor(algodConfig, encryptionPassword = undefined) {
     this.algodConfig = algodConfig
     this.encryptionPassword = encryptionPassword
   }
 
-  async init () {
+  async init() {
     this.algow = new AlgoWrapper(this.algodConfig)
     this.ipfsw = new IPFSWrapper(this.encryptionPassword)
     await this.ipfsw.init()
   }
 
-  async pushFile (filepath) {
+  async pushFile(filepath) {
     // UPLOAD file to the IPFS
     const fileAdded = await this.ipfsw.uploadFile(filepath)
 
@@ -26,7 +26,7 @@ module.exports = class AlgoIPFS {
     await this.algow.appendFileInfo(fileAdded)
   }
 
-  async pullFile (filepath) {
+  async pullFile(filepath) {
     const filename = path.basename(filepath)
 
     // GET info from Algorand (try 3 times)

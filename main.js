@@ -26,7 +26,7 @@ const sleep = (ms) => {
 }
 
 const main = async () => {
-  const filepath = '8.pdf'
+  const filepath = 'algorand_white_paper.pdf'
   const algo_ipfs = new AlgoIPFS(algodConfig, 'myveryhardtocrackpassword')
 
   await algo_ipfs.init()

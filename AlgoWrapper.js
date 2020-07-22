@@ -1,7 +1,7 @@
 const algosdk = require('algosdk')
 
 module.exports = class AlgoWrapper {
-  constructor ({ algodToken, algodServer, indexerServer, algodPort, account }) {
+  constructor({ algodToken, algodServer, indexerServer, algodPort, account }) {
     if (!this._isValidAccount(account)) {
       console.log(account)
       throw 'Invalid account, expected: {addr:"", sk:""}'
@@ -15,11 +15,11 @@ module.exports = class AlgoWrapper {
     this.algodClient = new algosdk.Algodv2(this.algodToken, this.algodServer, this.algodPort)
   }
 
-  _isValidAccount (account) {
+  _isValidAccount(account) {
     return account && account.addr && account.sk
   }
 
-  async appendFileInfo ({ path, cid }) {
+  async appendFileInfo({ path, cid }) {
     const noteContents = {
       cid: `${cid}`,
       filename: `${path}`,
@@ -56,31 +56,31 @@ module.exports = class AlgoWrapper {
     console.log("Decoded note: %s", algosdk.decodeObj(confirmedTxn.txn.txn.note))
   }
 
-  async _waitForConfirmation (txId) {
+  async _waitForConfirmation(txId) {
     let status = await this.algodClient.status().do()
     let lastRound = status["last-round"]
     console.log('status', status)
     while (true) {
-        const pendingInfo = await this.algodClient.pendingTransactionInformation(txId).do()
-        console.log('pendingInfo', pendingInfo)
-        if (pendingInfo["confirmed-round"] !== null && pendingInfo["confirmed-round"] > 0) {
-            //Got the completed Transaction
-            console.log("Transaction " + txId + " confirmed in round " + pendingInfo["confirmed-round"])
-            break
-        }
-        lastRound++
-        await this.algodClient.statusAfterBlock(lastRound).do()
+      const pendingInfo = await this.algodClient.pendingTransactionInformation(txId).do()
+      console.log('pendingInfo', pendingInfo)
+      if (pendingInfo["confirmed-round"] !== null && pendingInfo["confirmed-round"] > 0) {
+        //Got the completed Transaction
+        console.log("Transaction " + txId + " confirmed in round " + pendingInfo["confirmed-round"])
+        break
+      }
+      lastRound++
+      await this.algodClient.statusAfterBlock(lastRound).do()
     }
   }
 
-  async searchFileInfo (filename) {
+  async searchFileInfo(filename) {
     console.log("Looking for", filename)
     const indexerClient = new algosdk.Indexer(this.algodToken, this.indexerServer, this.algodPort)
 
     let accountTxns = await indexerClient.lookupAccountTransactions(this.account.addr).do()
-    let transactions = accountTxns.transactions.sort(( a, b ) => { return b['confirmed-round'] - a['confirmed-round'] })
+    let transactions = accountTxns.transactions.sort((a, b) => { return b['confirmed-round'] - a['confirmed-round'] })
     console.log("Number of txns for account:", transactions.length)
-    
+
     for (let txn of transactions) {
       if (txn.note !== undefined) {
         const noteBase64 = Buffer.from(txn.note, 'base64')

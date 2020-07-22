@@ -2,20 +2,23 @@ const last = require('it-last')
 const ipfs = require('ipfs')
 const path = require('path')
 const fs = require('fs')
-var crypto = require('crypto'), algorithm = 'aes-256-ctr';
+const crypto = require('crypto')
+
+const ALGORITHM = 'aes-256-cbc';
+const IV_LENGTH = 16; // For AES, this is always 16
 
 module.exports = class IPFSWrapper {
-  constructor (encryptionPassword=undefined) {
-    this.encryptionPassword = encryptionPassword
+  constructor(encryptionPassword = undefined) {
+    this.encryptionPassword = crypto.createHash('sha256').update(String(encryptionPassword)).digest('base64').substr(0, 32)
   }
 
-  async init () {
+  async init() {
     this.node = await ipfs.create()
     const version = await this.node.version()
     console.log('IPFS version:', version.version)
   }
 
-  async uploadFile (filepath) {
+  async uploadFile(filepath) {
     let fileContents = fs.readFileSync(filepath)
 
     if (Boolean(this.encryptionPassword)) {
@@ -32,7 +35,7 @@ module.exports = class IPFSWrapper {
     return fileAdded
   }
 
-  async downloadFile ({ cid, filename }) {
+  async downloadFile({ cid, filename }) {
     console.log('Looking for contents of hash:', cid)
 
     const chunks = []
@@ -52,17 +55,21 @@ module.exports = class IPFSWrapper {
     return fileContents
   }
 
-  _encryptBuffer (buffer){
+  _encryptBuffer(buffer) {
     console.log('Running encryption on file before uploading')
-    let cipher = crypto.createCipher(algorithm, this.encryptionPassword)
-    let crypted = Buffer.concat([cipher.update(buffer), cipher.final()])
-    return crypted
+    let iv = crypto.randomBytes(IV_LENGTH)
+    let cipher = crypto.createCipheriv(ALGORITHM, this.encryptionPassword, iv)
+    let encrypted = Buffer.concat([cipher.update(buffer), cipher.final()])
+    return Buffer.from(iv.toString('hex') + ':' + encrypted.toString('hex'))
   }
-  
-  _decryptBuffer (buffer) {
+
+  _decryptBuffer(buffer) {
     console.log('Running decryption on downloaded file')
-    let decipher = crypto.createDecipher(algorithm, this.encryptionPassword)
-    let dec = Buffer.concat([decipher.update(buffer), decipher.final()])
-    return dec
+    let textParts = String(buffer).split(':')
+    let iv = Buffer.from(textParts.shift(), 'hex')
+    let encryptedText = Buffer.from(textParts.join(':'), 'hex')
+    let decipher = crypto.createDecipheriv(ALGORITHM, this.encryptionPassword, iv)
+    let decrypted = Buffer.concat([decipher.update(encryptedText), decipher.final()])
+    return decrypted
   }
 }
