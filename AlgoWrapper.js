@@ -22,8 +22,7 @@ module.exports = class AlgoWrapper {
   async appendFileInfo({ path, cid }) {
     const noteContents = {
       cid: `${cid}`,
-      filename: `${path}`,
-      type: 'IPFS',
+      filename: `${path}`
     }
     let note = algosdk.encodeObj(noteContents)
 
