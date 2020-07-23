@@ -5,7 +5,6 @@ const ArgumentParser = require('argparse').ArgumentParser;
 
 const ALGOD_CONFIG = {
   algodToken: {
-    Accept: 'application/json',
     'X-API-Key': process.env.PS_API_KEY
   },
   algodServer: 'https://testnet-algorand.api.purestake.io/ps2',
