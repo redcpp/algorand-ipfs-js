@@ -72,8 +72,6 @@ class App {
     } else if (args.download) {
       this.run('download', args.download)
     }
-
-    console.log('Done')
   }
 
   sleep (ms) {
@@ -82,7 +80,7 @@ class App {
 
   async example () {
     const filepath = 'algorand_white_paper.pdf'
-    const algo_ipfs = new AlgoIPFS(algodConfig, '')
+    const algo_ipfs = new AlgoIPFS(ALGOD_CONFIG, '')
 
     await algo_ipfs.init()
     await algo_ipfs.pushFile(filepath)
