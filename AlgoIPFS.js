@@ -33,7 +33,7 @@ module.exports = class AlgoIPFS {
     let retries = 3
     let fileInfo = null
     do {
-      if (!fileInfo) {
+      if (retries !== 3 && !fileInfo) {
         console.log(`Couldn't find ${filename} information, trying again in 5 sec`)
         await sleep(5000)
       }
