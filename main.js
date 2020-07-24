@@ -79,7 +79,7 @@ class App {
 
   async example () {
     const filepath = 'algorand_white_paper.pdf'
-    const algo_ipfs = new AlgoIPFS(ALGOD_CONFIG, '')
+    const algo_ipfs = new AlgoIPFS(ALGOD_CONFIG, this.password)
 
     await algo_ipfs.init()
     await algo_ipfs.pushFile(filepath)
