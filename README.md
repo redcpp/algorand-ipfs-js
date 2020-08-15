@@ -68,3 +68,48 @@ Optional arguments:
   -p PASSWORD, --password PASSWORD
                         Change password
 ```
+
+# Setup
+
+Create a file `.env` and fill it in with the following configuration:
+
+```
+API_KEY=A5x...2zA
+ALGO_SERVER=https://testnet-algorand.api.purestake.io/ps2
+INDEX_SERVER=https://testnet-algorand.api.purestake.io/idx2
+ALGO_PORT=8080
+
+ADDRESS=F3K6...MU2I
+SK=128,19,150,...,68,112,254
+```
+
+The values from the `.env` file will be read by `App.py` to set the configuration object.
+
+```js
+const ALGOD_CONFIG = {
+  algodToken: {
+    'X-API-Key': process.env.API_KEY || ''
+  },
+  algodServer: process.env.ALGO_SERVER || '',
+  indexerServer: process.env.INDEX_SERVER || '',
+  algodPort: process.env.ALGO_PORT || '',
+  account: {
+    addr: process.env.ADDRESS,
+    sk: new Uint8Array(process.env.SK.split(','))
+  }
+}
+```
+
+# File Structure
+
+```
+- App.js
+- .env
+- demo/
+- src/
+  - AlgoIPFS.js
+  - AlgoWrapper.js
+  - IPFSWrapper.js
+```
+
+All code related to demo is not necessary, it correspond to the optional step 4. Site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) was constructed by using that code. You can checkout tutorial [tutorial here]() to better understand how Vue.js interaction with Algorand works.

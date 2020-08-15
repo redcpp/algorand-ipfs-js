@@ -5,11 +5,11 @@ const ArgumentParser = require('argparse').ArgumentParser;
 
 const ALGOD_CONFIG = {
   algodToken: {
-    'X-API-Key': process.env.PS_API_KEY
+    'X-API-Key': process.env.API_KEY || ''
   },
-  algodServer: 'https://testnet-algorand.api.purestake.io/ps2',
-  indexerServer: 'https://testnet-algorand.api.purestake.io/idx2',
-  algodPort: '',
+  algodServer: process.env.ALGO_SERVER || '',
+  indexerServer: process.env.INDEX_SERVER || '',
+  algodPort: process.env.ALGO_PORT || '',
   account: {
     addr: process.env.ADDRESS,
     sk: new Uint8Array(process.env.SK.split(','))
