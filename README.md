@@ -24,7 +24,7 @@ Check out this site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) t
 * A local client and indexer to connect to **or** a PureStake API key
   * For low-volume use, you can use the PureStake API service for [free](https://www.purestake.com/technology/algorand-api/). 
 
-# Overview
+# Introduction
 
 The Interplanetary File System (IPFS) is a peer-to-peer decentralized way of storing and referring to files by hashes. A client who wants to retrieve any of those files enjoys access to a nice abstraction layer where it simply needs to call the hash of the file it wants. IPFS then combs through the distributed nodes and supplies the client with the file.
 
@@ -42,3 +42,29 @@ As long as anyone has the hash of the PDF file, they can retrieve it from IPFS. 
 + Step 4 (optional): Retrieve a list of all the transactions carried out by a specific address and select only the ones with both a filename and an IPFS hash specified in the note section. You can now easily share this list of files with others.
 + Step 5: Be it by user selection or any other method use the hash to download the encrypted contents of a file.
 + Step 6: Decrypt the received contents and save them in a new file.
+
+# Usage
+
+To run the application use the command `node App.js` from the parent directory.
+
+You can do the following:
+
+```
+usage: App.js [-h] [-v] [-e] [-u UPLOAD] [-d DOWNLOAD] [-p PASSWORD]
+
+Algorand-IPFS for secure file sharing
+
+Optional arguments:
+  -h, --help            Show this help message and exit.
+  -v, --version         Show program's version number and exit.
+  -e, --example         Run the complete flow -- Upload to Algorand/IPFS the
+                        Algorand white paper and download it shortly after
+  -u UPLOAD, --upload UPLOAD
+                        Encrypt and upload file to IPFS and record hash and
+                        filename in Algorand
+  -d DOWNLOAD, --download DOWNLOAD
+                        Search filehash in Algorand and proceed to download
+                        from IPFS then decrypt it
+  -p PASSWORD, --password PASSWORD
+                        Change password
+```

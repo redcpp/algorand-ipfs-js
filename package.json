@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Connection of Algorand with IPFS",
   "main": "main.js",
-  "scripts": {
-    "app": "node App.js"
-  },
   "author": "Diego Said Anaya Mancilla",
   "license": "ISC",
   "dependencies": {
