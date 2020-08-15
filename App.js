@@ -1,5 +1,5 @@
 require('dotenv').config()
-const AlgoIPFS = require('./AlgoIPFS');
+const AlgoIPFS = require('./src/AlgoIPFS');
 const main = require('algosdk/src/main');
 const ArgumentParser = require('argparse').ArgumentParser;
 
@@ -61,7 +61,6 @@ const parseArgs = () => {
 class App {
   main () {
     let args = parseArgs()
-    console.log(args)
     this.password = args.password
 
     if (args.example) {
@@ -107,3 +106,4 @@ class App {
 
 app = new App()
 app.main()
+

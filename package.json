@@ -4,7 +4,7 @@
   "description": "Connection of Algorand with IPFS",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "app": "node App.js"
   },
   "author": "Diego Said Anaya Mancilla",
   "license": "ISC",

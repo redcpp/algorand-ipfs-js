@@ -9,7 +9,10 @@ File-content encryption before uploading to IPFS protects sensitive data from un
 
 Algorand blockchain technology is then utilized for keeping track of the filehashes and filenames, guaranteeing transparency and speed.
 
-Algorand-IPFS integrations allow us to create decentralized applications with secure digital content.
+Algorand-IPFS integrations allows us to create decentralized applications with secure digital content.
+
+!!! Demo
+Check out this site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) that enlists plain/encrypted files for sharing.
 
 [TOC]
 
@@ -29,5 +32,13 @@ The mechanism is to take a file, hash it cryptographically so you end up with a 
 
 As long as anyone has the hash of the PDF file, they can retrieve it from IPFS. So sensitive files are not well suited for IPFS in their native states. Unless we do something to these files, sharing sensitive files like health records or images is a poor fit for IPFS.
 
-!!! note
-To keep this solution simpler, Algorand Standard Assets will be left out will be left as a later exercise.
+# Data Flow
+
+![Algorand-IPFS Flow Diagram](assets/algo-ipfs-flow.png?raw=true "Algorand-IPFS Flow Diagram")
+
++ Step 1: Select the file and encrypt it with the Advanced Encryption Standard.
++ Step 2: Proceed to upload our encrypted file to the IPFS. You'll get a hash that represents the contents of it and that hash will help us retrieve it later, think of it as an URL.
++ Step 3: In the Algorand blockchain send a transaction to any address (that includes the sending address) for an ammount of 0 ALGO and include both the hash and filename in the transaction note. The only requirement is the 0.0001 ALGO fee for the transaction.
++ Step 4 (optional): Retrieve a list of all the transactions carried out by a specific address and select only the ones with both a filename and an IPFS hash specified in the note section. You can now easily share this list of files with others.
++ Step 5: Be it by user selection or any other method use the hash to download the encrypted contents of a file.
++ Step 6: Decrypt the received contents and save them in a new file.
