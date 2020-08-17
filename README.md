@@ -47,12 +47,16 @@ As long as anyone has the hash of the PDF file, they can retrieve it from IPFS. 
 
 To run the application use the command `node App.js` from the parent directory.
 
-You can do the following:
+Running `node App.js --help` displays the following:
 
 ```
 usage: App.js [-h] [-v] [-e] [-u UPLOAD] [-d DOWNLOAD] [-p PASSWORD]
 
 Algorand-IPFS for secure file sharing
+The example provided as part of `App.js` uploads file `assets/algorand_white_paper.pdf` after encyption and proceeds to download it again under the name `_algorand_white_paper.pdf`. This allows you to test the data flow (see above) is working as expected.
+
+You can try running the example flow by running `App.js`
+
 
 Optional arguments:
   -h, --help            Show this help message and exit.
@@ -69,9 +73,51 @@ Optional arguments:
                         Change password
 ```
 
+**Upload**
+
+```bash
+node App.js --upload ./assets/algorand_white_paper.pdf
+```
+
+**Download**
+
+```bash
+node App.js --download algorand_white_paper.pdf
+```
+
+**Example**
+
+```bash
+node App.js --example
+```
+
+The example provided as part of `App.js` uploads file `assets/algorand_white_paper.pdf` after encyption and proceeds to download it again under the name `_algorand_white_paper.pdf`. This allows you to test the data flow is working as expected.
+
+# File Structure
+
+```
+- App.js
+- .env
+- demo/
+- src/
+  - AlgoIPFS.js
+  - AlgoWrapper.js
+  - IPFSWrapper.js
+```
+
+All code related to demo is not necessary, it correspond to step 4 which is optional (see the data flow section above). Site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) was constructed by using that code. You can checkout tutorial [Real-time block visualizer with Vue](https://developer.algorand.org/tutorials/real-time-block-visualizer-vue/) to better understand how Vue.js interaction with Algorand works.
+
+File `App.js` helps us interact with the user via the command line. It's also the place where we set the configuration for connecting to Algorand.
+
+Directory `src/` contains 3 scripts, each one is a class on its own.
+
+Script `AlgoIPFS.js` defines only 2 methods, `pushFile()` and `pullFile()`. That way after setting up all of our configuration on initialization we only care about the filepath/filename without getting into details.
+
+`AlgoWrapper.js` handles all communication to the Algorand blockchain while `IPFSWrapper.js` communicates to the IPFS.
+
 # Setup
 
-Create a file `.env` and fill it in with the following configuration:
+Create file `.env` and fill it in with your configuration:
 
 ```
 API_KEY=A5x...2zA
@@ -83,7 +129,7 @@ ADDRESS=F3K6...MU2I
 SK=128,19,150,...,68,112,254
 ```
 
-The values from the `.env` file will be read by `App.py` to set the configuration object.
+The values from the `.env` file are read by `App.py` to set the configuration object that allows us to establish a connection to the Algorand blockchain.
 
 ```js
 const ALGOD_CONFIG = {
@@ -100,16 +146,6 @@ const ALGOD_CONFIG = {
 }
 ```
 
-# File Structure
+# Final Thoughts
 
-```
-- App.js
-- .env
-- demo/
-- src/
-  - AlgoIPFS.js
-  - AlgoWrapper.js
-  - IPFSWrapper.js
-```
-
-All code related to demo is not necessary, it correspond to the optional step 4. Site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) was constructed by using that code. You can checkout tutorial [tutorial here]() to better understand how Vue.js interaction with Algorand works.
+// TODO

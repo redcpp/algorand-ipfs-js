@@ -24,6 +24,8 @@ module.exports = class AlgoIPFS {
 
     // APPEND information to Algorand
     await this.algow.appendFileInfo(fileAdded)
+
+    console.log('Finished pushing file')
   }
 
   async pullFile(filepath) {
@@ -42,5 +44,7 @@ module.exports = class AlgoIPFS {
 
     // RETRIEVE file contents
     await this.ipfsw.downloadFile(fileInfo)
+
+    console.log('Finished pulling file')
   }
 }
