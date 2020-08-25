@@ -6,8 +6,8 @@
   "author": "Diego Said Anaya Mancilla",
   "license": "ISC",
   "dependencies": {
-    "algosdk": "^1.6.2",
-    "argparse": "^1.0.10",
+    "algosdk": "^1.7.0",
+    "argparse": "2.0.0",
     "dotenv": "^8.2.0",
     "ipfs": "^0.47.0",
     "it-last": "^1.0.2"

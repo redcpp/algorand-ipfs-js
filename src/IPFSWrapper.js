@@ -9,7 +9,9 @@ const IV_LENGTH = 16; // For AES, this is always 16
 
 module.exports = class IPFSWrapper {
   constructor(encryptionPassword = undefined) {
-    this.encryptionPassword = crypto.createHash('sha256').update(String(encryptionPassword)).digest('base64').substr(0, 32)
+    if (encryptionPassword) {
+      this.encryptionPassword = crypto.createHash('sha256').update(String(encryptionPassword)).digest('base64').substr(0, 32)
+    }
   }
 
   async init() {
@@ -22,6 +24,7 @@ module.exports = class IPFSWrapper {
     let fileContents = fs.readFileSync(filepath)
 
     if (Boolean(this.encryptionPassword)) {
+      console.log('Encrypting file')
       fileContents = this._encryptBuffer(fileContents)
     }
 
@@ -45,6 +48,7 @@ module.exports = class IPFSWrapper {
     let fileContents = Buffer.concat(chunks)
 
     if (Boolean(this.encryptionPassword)) {
+      console.log('Unencrypting file')
       fileContents = this._decryptBuffer(fileContents)
     }
 

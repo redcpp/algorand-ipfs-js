@@ -18,43 +18,42 @@ const ALGOD_CONFIG = {
 
 const parseArgs = () => {
   let parser = new ArgumentParser({
-    version: '1.0',
-    addHelp: true,
+    prog: 'PROG',
+    add_help: true,
     description: 'Algorand-IPFS for secure file sharing'
   })
-  parser.addArgument(
-    ['-e', '--example'],
+  parser.add_argument(
+    '-e', '--example',
     {
-      help: 'Run the complete flow -- Upload to Algorand/IPFS the Algorand white paper and download it shortly after',
-      nargs: 0
+      action: 'store_true',
+      help: 'Test the complete flow -- Upload to Algorand/IPFS the Algorand white paper and download it shortly after',
     }
   )
-  parser.addArgument(
-    ['-u', '--upload'],
+  parser.add_argument(
+    '-k', '--key',
+    {
+      help: 'Use an encryption password'
+    }
+  )
+  parser.add_argument(
+    '-u', '--upload',
     {
       help: 'Encrypt and upload file to IPFS and record hash and filename in Algorand'
     }
   )
-  parser.addArgument(
-    ['-d', '--download'],
+  parser.add_argument(
+    '-d', '--download',
     {
       help: 'Search filehash in Algorand and proceed to download from IPFS then decrypt it'
     }
   )
-  parser.addArgument(
-    ['-p', '--password'],
-    {
-      help: 'Change password',
-      defaultValue: 'myveryhardtocrackpassword'
-    }
-  )
-  return parser.parseArgs()
+  return parser.parse_args()
 }
 
 class App {
   main () {
     let args = parseArgs()
-    this.password = args.password
+    this.key = args.key
 
     if (args.example) {
       this.example()
@@ -71,7 +70,10 @@ class App {
 
   async example () {
     const filepath = './assets/algorand_white_paper.pdf'
-    const algo_ipfs = new AlgoIPFS(ALGOD_CONFIG, this.password)
+    const algo_ipfs = new AlgoIPFS({
+      ...ALGOD_CONFIG,
+      encryptionPassword: 'mysecureencryptionpassword',
+    })
 
     await algo_ipfs.init()
     await algo_ipfs.pushFile(filepath)
@@ -83,7 +85,10 @@ class App {
   }
 
   async run (action, filepath) {
-    const algo_ipfs = new AlgoIPFS(ALGOD_CONFIG, this.password)
+    const algo_ipfs = new AlgoIPFS({
+      ...ALGOD_CONFIG,
+      encryptionPassword: this.key,
+    })
     await algo_ipfs.init()
 
     if (action === 'upload') {
