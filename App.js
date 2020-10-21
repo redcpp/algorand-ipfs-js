@@ -63,7 +63,7 @@ class App {
     } else if (args.download) {
       await this.run('download', args.download)
     } else {
-      console.log(parser.print_help())
+      parser.print_help()
     }
   }
 
