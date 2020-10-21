@@ -105,7 +105,7 @@ The example provided as part of `App.js` uploads file `assets/algorand_white_pap
   - IPFSWrapper.js
 ```
 
-All code related to demo is not necessary, it correspond to step 4 which is optional (see the data flow section above). Site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) was constructed by using that code. You can checkout tutorial [Real-time block visualizer with Vue](https://developer.algorand.org/tutorials/real-time-block-visualizer-vue/) to better understand how Vue.js interaction with Algorand works.
+All code related to demo is not necessary, it corresponds to step 4 which is optional (see the data flow section above). Site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) was constructed by using that code. You can checkout tutorial [Real-time block visualizer with Vue](https://developer.algorand.org/tutorials/real-time-block-visualizer-vue/) to better understand how Vue.js interaction with Algorand works.
 
 File `App.js` helps us interact with the user via the command line. It's also the place where we set the configuration for connecting to Algorand.
 
@@ -148,4 +148,10 @@ const ALGOD_CONFIG = {
 
 # Final Thoughts
 
-// TODO
+In general blockchains are not the best solution for storing large volumes of data and files, so we can secure sensitive files by encryption and stored them on the IPFS which is a better network for file sharing than the blockchain.
+
+We can store the IPFS hashes on the blockchain to combine the strengths of both the Algorand blockchain and the distributed file storage. This is a powerful combination because a blockchain is resistant to modification of the data and we can now rest assured that every IPFS hash recorded in the Algorand blockchain points to the exact data we are looking for. Remember, an IPFS hash represents the content not the location, unlike common URLs which point to a location where data is variable through time.
+
+This is just the template of how you could extend Algorand-based applications into the secure file distribution domain and the example code we provided demonstrates how easy it is to integrate both the Algorand SDKs with the IPFS.
+
+> This body of work was inspired by a blog post on Medium called [Learn to securely share files on the blockchain with IPFS!](https://medium.com/@mycoralhealth/learn-to-securely-share-files-on-the-blockchain-with-ipfs-219ee47df54c)
