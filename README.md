@@ -50,7 +50,7 @@ To run the application use the command `node App.js` from the parent directory.
 Running `node App.js --help` displays the following:
 
 ```
-usage: App.js [-h] [-v] [-e] [-u UPLOAD] [-d DOWNLOAD] [-p PASSWORD]
+usage: App.js [-h] [-v] [-e] [-u UPLOAD] [-d DOWNLOAD]
 
 Algorand-IPFS for secure file sharing
 The example provided as part of `App.js` uploads file `assets/algorand_white_paper.pdf` after encyption and proceeds to download it again under the name `_algorand_white_paper.pdf`. This allows you to test the data flow (see above) is working as expected.
@@ -69,8 +69,6 @@ Optional arguments:
   -d DOWNLOAD, --download DOWNLOAD
                         Search filehash in Algorand and proceed to download
                         from IPFS then decrypt it
-  -p PASSWORD, --password PASSWORD
-                        Change password
 ```
 
 **Upload**
@@ -127,6 +125,7 @@ ALGO_PORT=8080
 
 ADDRESS=F3K6...MU2I
 SK=128,19,150,...,68,112,254
+ENCRYPTION_PASSWORD=mysecureencryptionpassword 
 ```
 
 The values from the `.env` file are read by `App.py` to set the configuration object that allows us to establish a connection to the Algorand blockchain.
