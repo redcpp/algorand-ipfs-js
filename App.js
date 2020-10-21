@@ -47,12 +47,13 @@ const parseArgs = () => {
       help: 'Search filehash in Algorand and proceed to download from IPFS then decrypt it'
     }
   )
-  return parser.parse_args()
+  return parser
 }
 
 class App {
   main () {
-    let args = parseArgs()
+    let parser = parseArgs()
+    let args = parser.parse_args()
     this.key = args.key
 
     if (args.example) {
@@ -61,6 +62,8 @@ class App {
       this.run('upload', args.upload)
     } else if (args.download) {
       this.run('download', args.download)
+    } else {
+      console.log(parser.printHelp())
     }
   }
 
