@@ -51,19 +51,19 @@ const parseArgs = () => {
 }
 
 class App {
-  main () {
+  async main () {
     let parser = parseArgs()
     let args = parser.parse_args()
     this.key = args.key
 
     if (args.example) {
-      this.example()
+      await this.example()
     } else if (args.upload) {
-      this.run('upload', args.upload)
+      await this.run('upload', args.upload)
     } else if (args.download) {
-      this.run('download', args.download)
+      await this.run('download', args.download)
     } else {
-      console.log(parser.printHelp())
+      console.log(parser.print_help())
     }
   }
 
@@ -105,6 +105,10 @@ class App {
   }
 }
 
-app = new App()
-app.main()
+async function globalMain() {
+  app = new App()
+  await app.main()
+  process.exit()
+}
 
+globalMain()
