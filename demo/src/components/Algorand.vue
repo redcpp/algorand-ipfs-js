@@ -19,7 +19,7 @@ export default {
   methods: {
     async getFiles() {
       let accountTxns = await indexerClient
-        .lookupAccountTransactions('F3K6DNWSP7C7U7C4VCMJVX7N723Q6GDGCFHEP2FLIV373FKAYD7LT2MU2I')
+        .lookupAccountTransactions('7N3NCF342JXBVECI5IEB4LEKKD6FUHY6U2TZZ5BQYARIHXPGLPBJ2FKV3M')
         .do()
       let transactions = accountTxns.transactions.sort((a, b) => {
         return b["confirmed-round"] - a["confirmed-round"]
@@ -33,6 +33,7 @@ export default {
         if (txn.note !== undefined) {
           const noteBase64 = Buffer.from(txn.note, "base64")
           const note = algosdk.decodeObj(noteBase64)
+          note.txn = txn.id
           if (!foundFiles[note.filename]) {
             files.push(note)
             foundFiles[note.filename] = true

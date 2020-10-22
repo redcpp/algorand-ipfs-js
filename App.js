@@ -30,12 +30,6 @@ const parseArgs = () => {
     }
   )
   parser.add_argument(
-    '-k', '--key',
-    {
-      help: 'Use an encryption password'
-    }
-  )
-  parser.add_argument(
     '-u', '--upload',
     {
       help: 'Encrypt and upload file to IPFS and record hash and filename in Algorand'
@@ -54,7 +48,6 @@ class App {
   async main () {
     let parser = parseArgs()
     let args = parser.parse_args()
-    this.key = args.key
 
     if (args.example) {
       await this.example()
@@ -90,7 +83,7 @@ class App {
   async run (action, filepath) {
     const algo_ipfs = new AlgoIPFS({
       ...ALGOD_CONFIG,
-      encryptionPassword: this.key,
+      encryptionPassword: process.env.ENCRYPTION_PASSWORD,
     })
     await algo_ipfs.init()
 
