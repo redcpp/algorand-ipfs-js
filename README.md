@@ -18,7 +18,7 @@ Check out this site [https://algo-ipfs.surge.sh/](https://algo-ipfs.surge.sh/) t
 
 # Requirements 
 
-* Basic working knoweldge of JavaScript (ES6 recommended)
+* Basic working knowledge of JavaScript (ES6 recommended)
 * A working [Node](https://nodejs.org/) installation
 * [JS Algorand-SDK V2](https://github.com/algorand/js-algorand-sdk)
 * A local client and indexer to connect to **or** a PureStake API key
