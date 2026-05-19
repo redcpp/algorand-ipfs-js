@@ -9,7 +9,7 @@
     <div class="container">
       <p style="margin: 50px auto 10px auto;">
         <small>
-          For demostration purposes the algorand_white_paper.pdf is the only encrypted file. Use the
+          For demonstration purposes the algorand_white_paper.pdf is the only encrypted file. Use the
           <a href="https://github.com/redcpp/algorand-ipfs-js">Algorand-IPFS Integration</a>
           to visualize its contents.
         </small>
@@ -18,15 +18,15 @@
         <li class="table-header">
           <div class="col col-1">Filename</div>
           <div class="col col-2">IPFS Hash</div>
-          <div class="col col-3">AlgoExplorer</div>
+          <div class="col col-3">Transaction</div>
         </li>
         <li v-for="file in files" :key="file.filename" class="table-row">
           <div class="col col-1">{{ file.filename }}</div>
           <div class="col col-2 small">
-            <a :href="`https://ipfs.io/ipfs/${file.cid}`">{{ file.cid }}</a>
+            <a :href="`https://ipfs.io/ipfs/${file.cid}`" target="_blank" rel="noopener">{{ file.cid }}</a>
           </div>
           <div class="col col-3 small">
-            <a :href="`https://testnet.algoexplorer.io/tx/${file.txn}`">{{ file.txn }}</a>
+            <a :href="`https://lora.algokit.io/testnet/transaction/${file.txn}`" target="_blank" rel="noopener">{{ file.txn }}</a>
           </div>
         </li>
       </ul>
