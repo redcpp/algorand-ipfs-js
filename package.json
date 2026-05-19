@@ -1,16 +1,21 @@
 {
   "name": "algo-ipfs",
-  "version": "1.0.0",
-  "description": "Connection of Algorand with IPFS",
-  "main": "main.js",
+  "version": "2.0.0",
+  "description": "Connection of Algorand with IPFS (AlgoNode + Kubo/IPFS HTTP API)",
+  "main": "App.js",
+  "scripts": {
+    "start": "node App.js",
+    "example": "node App.js --example",
+    "test": "node -e \"require('./src/AlgoWrapper'); require('./src/IPFSWrapper'); require('./src/AlgoIPFS'); console.log('modules load OK')\""
+  },
   "author": "Diego Said Anaya Mancilla",
-  "license": "ISC",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "algosdk": "^1.7.2",
-    "argparse": "2.0.0",
-    "dotenv": "^8.2.0",
-    "ipfs": "^0.47.0",
-    "it-last": "^1.0.4",
-    "node-forge": "^0.10.0"
+    "algosdk": "^2.11.0",
+    "argparse": "^2.0.1",
+    "dotenv": "^16.4.5"
   }
 }
