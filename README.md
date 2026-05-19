@@ -71,7 +71,6 @@ There is no custodian, no smart contract, and no server in the middle. The only 
 - **Using a blockchain for what it's actually good at.** Algorand stores an immutable, ordered, account-keyed log of notes — that's all this app needs. No smart contract, no token, no governance overhead. A 0-Algo self-payment costs the minimum 0.001 ALGO fee and nothing more.
 - **Documented trade-offs.** The IPFS layer talks the Kubo HTTP RPC directly (~100 lines of `fetch`) instead of pulling in `ipfs-http-client` or [Helia](https://github.com/ipfs/helia) — fewer transitive deps, no ESM/CJS interop tax, easier to point at any kubo-compatible service (Pinata, web3.storage gateways) via two env vars.
 - **Maintainability across a 6-year gap.** The original 2020 codebase was revived in 2026: PureStake → AlgoNode, `algosdk` v1 → v2, deprecated `ipfs` npm → Kubo RPC, Node-Sass → Dart Sass, Vue CLI 4 → 5. See [2026 modernization notes](#2026-modernization-notes).
-- **Honest about what it is.** This is a small, focused systems demo — not a product, not a smart-contract DApp, and not an AI/ML project. It is meant to read clearly end-to-end in a single sitting.
 
 ---
 
@@ -224,7 +223,7 @@ The `demo/` directory is the source of [algo-ipfs.surge.sh](https://algo-ipfs.su
 
 ## Credits & inspiration
 
-This project began as an implementation exercise on top of [*Learn to securely share files on the blockchain with IPFS!*](https://medium.com/@mycoralhealth/learn-to-securely-share-files-on-the-blockchain-with-ipfs-219ee47df54c) by My Coral Health. The block-explorer demo borrows structural ideas from the Algorand Developer tutorial [Real-time block visualizer with Vue](https://developer.algorand.org/tutorials/real-time-block-visualizer-vue/). All bugs and design choices in this repository are my own.
+This project began as an implementation exercise on top of [*Learn to securely share files on the blockchain with IPFS!*](https://medium.com/@mycoralhealth/learn-to-securely-share-files-on-the-blockchain-with-ipfs-219ee47df54c) by My Coral Health, which I extended with client-side encryption, a CLI, and the on-chain index pattern. The block-explorer demo reuses structural ideas from my own real-time block visualizer ([`redcpp/algorand-vue-rt`](https://github.com/redcpp/algorand-vue-rt)) and from the Algorand Developer tutorial I wrote about it ([archived snapshot](https://web.archive.org/web/20250123102822/https://developer.algorand.org/tutorials/real-time-block-visualizer-vue/); the original URL is now a 404 after Algorand's docs migration).
 
 ---
 
