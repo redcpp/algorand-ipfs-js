@@ -3,14 +3,21 @@
 </template>
 
 <script>
-const algosdk = require("algosdk")
-const indexerServer = 'https://testnet-algorand.api.purestake.io/idx2'
+import algosdk from "algosdk"
+import { Buffer } from "buffer"
+
+// AlgoNode is a free, no-API-key public Algorand endpoint.
+// Override at build time with VUE_APP_INDEXER_SERVER if needed.
+const indexerServer =
+  process.env.VUE_APP_INDEXER_SERVER || "https://testnet-idx.algonode.cloud"
 const port = ""
-const token = {
-  'X-API-Key': process.env.VUE_APP_API_KEY
-}
-console.log('key', process.env.VUE_APP_API_KEY)
+const token = ""
+
 const indexerClient = new algosdk.Indexer(token, indexerServer, port)
+
+const DEMO_ADDRESS =
+  process.env.VUE_APP_DEMO_ADDRESS ||
+  "7N3NCF342JXBVECI5IEB4LEKKD6FUHY6U2TZZ5BQYARIHXPGLPBJ2FKV3M"
 
 export default {
   created() {
@@ -18,30 +25,40 @@ export default {
   },
   methods: {
     async getFiles() {
-      let accountTxns = await indexerClient
-        .lookupAccountTransactions('7N3NCF342JXBVECI5IEB4LEKKD6FUHY6U2TZZ5BQYARIHXPGLPBJ2FKV3M')
-        .do()
-      let transactions = accountTxns.transactions.sort((a, b) => {
-        return b["confirmed-round"] - a["confirmed-round"]
-      })
-      console.log("Number of txns for account:", transactions.length)
+      try {
+        const accountTxns = await indexerClient
+          .lookupAccountTransactions(DEMO_ADDRESS)
+          .do()
+        const transactions = (accountTxns.transactions || []).sort(
+          (a, b) => b["confirmed-round"] - a["confirmed-round"]
+        )
+        console.log("Number of txns for account:", transactions.length)
 
-      let foundFiles = {}
-      let files = []
+        const foundFiles = {}
+        const files = []
 
-      for (let txn of transactions) {
-        if (txn.note !== undefined) {
-          const noteBase64 = Buffer.from(txn.note, "base64")
-          const note = algosdk.decodeObj(noteBase64)
-          note.txn = txn.id
-          if (!foundFiles[note.filename]) {
-            files.push(note)
-            foundFiles[note.filename] = true
+        for (const txn of transactions) {
+          if (txn.note !== undefined) {
+            try {
+              const noteBytes = Buffer.from(txn.note, "base64")
+              const note = algosdk.decodeObj(noteBytes)
+              note.txn = txn.id
+              if (note.filename && !foundFiles[note.filename]) {
+                files.push(note)
+                foundFiles[note.filename] = true
+              }
+            } catch (decodeErr) {
+              // Skip notes that aren't msgpack-encoded by this app.
+              console.debug("Skipping unparsable note on tx", txn.id, decodeErr.message)
+            }
           }
         }
-      }
 
-      this.$emit('files', files)
+        this.$emit("files", files)
+      } catch (e) {
+        console.error("Failed to load files from Algorand indexer:", e)
+        this.$emit("files", [])
+      }
     },
   },
 }

@@ -1,53 +1,47 @@
 require('dotenv').config()
-const AlgoIPFS = require('./src/AlgoIPFS');
-const main = require('algosdk/src/main');
-const ArgumentParser = require('argparse').ArgumentParser;
+const AlgoIPFS = require('./src/AlgoIPFS')
+const ArgumentParser = require('argparse').ArgumentParser
+
+// AlgoNode (https://algonode.io/api/) is a free, no-API-key public Algorand
+// endpoint. Override via .env if you want MainNet or a private node.
+const DEFAULT_ALGOD_SERVER = 'https://testnet-api.algonode.cloud'
+const DEFAULT_INDEXER_SERVER = 'https://testnet-idx.algonode.cloud'
 
 const ALGOD_CONFIG = {
-  algodToken: {
-    'X-API-Key': process.env.API_KEY || ''
-  },
-  algodServer: process.env.ALGO_SERVER || '',
-  indexerServer: process.env.INDEX_SERVER || '',
+  // AlgoNode requires no token; pass an empty string.
+  algodToken: '',
+  algodServer: process.env.ALGO_SERVER || DEFAULT_ALGOD_SERVER,
+  indexerServer: process.env.INDEX_SERVER || DEFAULT_INDEXER_SERVER,
   algodPort: process.env.ALGO_PORT || '',
   account: {
     addr: process.env.ADDRESS,
-    sk: new Uint8Array(process.env.SK.split(','))
-  }
+    sk: process.env.SK ? new Uint8Array(process.env.SK.split(',').map(Number)) : undefined,
+  },
 }
 
 const parseArgs = () => {
-  let parser = new ArgumentParser({
-    prog: 'PROG',
+  const parser = new ArgumentParser({
+    prog: 'algo-ipfs',
     add_help: true,
-    description: 'Algorand-IPFS for secure file sharing'
+    description: 'Algorand-IPFS for secure file sharing',
   })
-  parser.add_argument(
-    '-e', '--example',
-    {
-      action: 'store_true',
-      help: 'Test the complete flow -- Upload to Algorand/IPFS the Algorand white paper and download it shortly after',
-    }
-  )
-  parser.add_argument(
-    '-u', '--upload',
-    {
-      help: 'Encrypt and upload file to IPFS and record hash and filename in Algorand'
-    }
-  )
-  parser.add_argument(
-    '-d', '--download',
-    {
-      help: 'Search filehash in Algorand and proceed to download from IPFS then decrypt it'
-    }
-  )
+  parser.add_argument('-e', '--example', {
+    action: 'store_true',
+    help: 'Test the complete flow -- Upload to Algorand/IPFS the Algorand white paper and download it shortly after',
+  })
+  parser.add_argument('-u', '--upload', {
+    help: 'Encrypt and upload file to IPFS and record hash and filename in Algorand',
+  })
+  parser.add_argument('-d', '--download', {
+    help: 'Search filehash in Algorand and proceed to download from IPFS then decrypt it',
+  })
   return parser
 }
 
 class App {
-  async main () {
-    let parser = parseArgs()
-    let args = parser.parse_args()
+  async main() {
+    const parser = parseArgs()
+    const args = parser.parse_args()
 
     if (args.example) {
       await this.example()
@@ -60,11 +54,11 @@ class App {
     }
   }
 
-  sleep (ms) {
+  sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  async example () {
+  async example() {
     const filepath = './assets/algorand_white_paper.pdf'
     const algo_ipfs = new AlgoIPFS({
       ...ALGOD_CONFIG,
@@ -80,7 +74,7 @@ class App {
     await algo_ipfs.pullFile(filepath)
   }
 
-  async run (action, filepath) {
+  async run(action, filepath) {
     const algo_ipfs = new AlgoIPFS({
       ...ALGOD_CONFIG,
       encryptionPassword: process.env.ENCRYPTION_PASSWORD,
@@ -92,14 +86,13 @@ class App {
     } else if (action === 'download') {
       await algo_ipfs.pullFile(filepath)
     } else {
-      error_msg = `Invalid action: ${action} ${filename}`
-      throw error_msg
+      throw new Error(`Invalid action: ${action} ${filepath}`)
     }
   }
 }
 
 async function globalMain() {
-  app = new App()
+  const app = new App()
   await app.main()
   process.exit()
 }
