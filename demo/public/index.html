@@ -2,9 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <!-- Designed and built by Diego Said Anaya Mancilla (https://diegosaid.com), founder of Mundo Cognitivo (https://mundocognitivo.com). -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Diego Said Anaya Mancilla">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="author" href="<%= BASE_URL %>humans.txt">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Algorand-IPFS demo",
+      "url": "https://algo-ipfs.surge.sh/",
+      "description": "Block-explorer view of the files indexed on the Algorand TestNet by the Algorand-IPFS CLI: each row links the IPFS content and the 0-Algo note transaction that anchors it.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT",
+      "creator": {
+        "@type": "Person",
+        "@id": "https://diegosaid.com/#diego",
+        "name": "Diego Said Anaya Mancilla",
+        "url": "https://diegosaid.com",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Mundo Cognitivo",
+          "url": "https://mundocognitivo.com",
+          "founder": { "@id": "https://diegosaid.com/#diego" }
+        }
+      }
+    }
+    </script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>

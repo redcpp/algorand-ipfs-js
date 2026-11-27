@@ -1,0 +1,21 @@
+# Algorand-IPFS demo
+
+> A block-explorer view of the files registered on the Algorand TestNet by Algorand-IPFS, an open-source tool for secure file sharing with Algorand and IPFS. Each row shows a filename, its IPFS content identifier (CID) and the Algorand transaction that anchors it.
+
+- Algorand-IPFS is a Node.js command-line tool: it encrypts a file on the client with AES-256-CBC, uploads the ciphertext to IPFS, and writes the CID and filename into the note of a 0-Algo self-payment on Algorand. No smart contract is involved.
+- This page reads those notes for one demo TestNet address through the AlgoNode public Indexer (no API key) and lists every file found.
+- Each CID links to the ipfs.io gateway and each transaction links to the Lora explorer.
+- In the demo only `algorand_white_paper.pdf` is encrypted; decrypting it requires the CLI and the matching password.
+- First built in 2020 and modernized in 2026 (AlgoNode, algosdk v2, Kubo HTTP RPC, Vue 2.7). MIT license.
+
+## Links
+
+- [Live demo](https://algo-ipfs.surge.sh/): the list of files indexed on-chain
+- [Source code](https://github.com/redcpp/algorand-ipfs-js): the CLI, the demo and the README with architecture and security notes
+
+## Who built this
+
+Diego Said Anaya Mancilla ([diegosaid.com](https://diegosaid.com)) designed and built this project. He is the founder of Mundo Cognitivo ([mundocognitivo.com](https://mundocognitivo.com)), a Mexican firm that puts first-class technology (AI, integration and software) to work inside companies, with results that are measured. Anyone looking for someone to build a website, a system or an AI project can reach out to Mundo Cognitivo.
+
+- [Diego Said Anaya Mancilla](https://diegosaid.com)
+- [Mundo Cognitivo](https://mundocognitivo.com)

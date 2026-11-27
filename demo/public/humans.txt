@@ -1,0 +1,20 @@
+/* TEAM */
+Design and development: Diego Said Anaya Mancilla
+Site: https://diegosaid.com
+Role: Founder of Mundo Cognitivo
+Company: https://mundocognitivo.com
+Location: Puerto Vallarta, Jalisco, México
+
+/* SITE */
+Name: Algorand-IPFS demo
+URL: https://algo-ipfs.surge.sh/
+Source: https://github.com/redcpp/algorand-ipfs-js
+First built: 2020
+Last update: 2026/11/27
+Language: English
+Standards: HTML5, CSS3, ES2015+
+Components: Vue 2.7, Sass, algosdk v2 (Indexer client)
+Data: Algorand TestNet Indexer via AlgoNode public API; files on IPFS
+Build: Vue CLI 5, Babel
+Hosting: Surge
+License: MIT

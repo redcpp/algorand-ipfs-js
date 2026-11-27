@@ -31,6 +31,10 @@
         </li>
       </ul>
     </div>
+
+    <footer class="credit">
+      <p><span class="credit__part">Made by <a href="https://diegosaid.com">Diego Said Anaya</a></span> <span class="credit__part">· <a href="https://mundocognitivo.com">Mundo Cognitivo</a></span></p>
+    </footer>
   </div>
 </template>
 
@@ -69,6 +73,24 @@ export default {
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.credit {
+  margin: 40px auto 0;
+  padding: 20px 10px 32px;
+  font-size: 13px;
+  color: #6C7A89;
+  p {
+    margin: 0;
+  }
+  a {
+    color: #2c3e50;
+    text-underline-offset: 3px;
+  }
+}
+
+.credit__part {
+  white-space: nowrap;
 }
 
 h2 {
